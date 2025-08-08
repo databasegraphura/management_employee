@@ -1,9 +1,16 @@
+import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { FaHome, FaTasks, FaMoneyCheck, FaQuestionCircle, FaUserCircle } from "react-icons/fa";
 import { AiOutlineProject } from "react-icons/ai";
 
 export default function Sidebar() {
   const location = useLocation();
+  const [employeeName, setEmployeeName] = useState("Name");
+
+  useEffect(() => {
+    const name = localStorage.getItem("employeeName");
+    if (name) setEmployeeName(name);
+  }, []);
 
   const menuItems = [
     { name: "Dashboard", path: "/dashboard", icon: <FaHome /> },
@@ -27,7 +34,7 @@ export default function Sidebar() {
       {/* User Info */}
       <div className="flex flex-col items-center text-white py-6">
         <FaUserCircle className="text-4xl mb-2" />
-        <p className="text-md font-semibold">Name</p>
+        <p className="text-md font-semibold">{employeeName}</p>
         <p className="text-sm opacity-80">Employee</p>
       </div>
 

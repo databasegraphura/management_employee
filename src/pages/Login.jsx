@@ -26,6 +26,9 @@ const Login = () => {
         }
       );
       // You can store token or user info here if needed
+      if (res.data && res.data.name) {
+        localStorage.setItem("employeeName", res.data.name);
+      }
       navigate("/dashboard");
     } catch (err) {
       setError("Invalid credentials. Please try again.");
