@@ -4,12 +4,13 @@ import MyProjects from "./pages/MyProjects";
 import Help from "./pages/Help";
 import PayOut from "./pages/PayOut";
 import CompletedProjects from "./pages/CompletedProjects";
+import Login from "./pages/Login";
 
 function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Dashboard />} />
+        <Route path="/" element={<Login/>} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/my-projects" element={<MyProjects />} />
         <Route path="/completed-projects" element={<CompletedProjects />} />

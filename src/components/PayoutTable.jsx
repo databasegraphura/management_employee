@@ -1,17 +1,8 @@
 import { useState } from "react";
 
-export default function PayoutTable({ title }) {
+export default function PayoutTable({ title, data = [], loading }) {
   const [showModal, setShowModal] = useState(false);
   const [selectedCompany, setSelectedCompany] = useState("");
-
-  const rows = Array.from({ length: 6 }, (_, i) => ({
-    company: `Company ${i + 1}`,
-    invoice: "Bold text column",
-    service: "Bold text column",
-    total_amount: "Bold text column",
-    complete_date: "Bold text column",
-    project_file: "Bold text column",
-  }));
 
   const handleUpdateClick = (company) => {
     setSelectedCompany(company);
@@ -33,23 +24,33 @@ export default function PayoutTable({ title }) {
           </tr>
         </thead>
         <tbody>
-          {rows.map((row, idx) => (
-            <tr key={idx} className="border-t">
-              <td className="px-2 py-2">{row.company}</td>
-              <td className="px-2 py-2">{row.invoice}</td>
-              <td className="px-2 py-2">{row.service}</td>
-              <td className="px-2 py-2">{row.total_amount}</td>
-              <td className="px-2 py-2">{row.complete_date}</td>
-              <td className="px-2 py-2">
-                <button
-                  onClick={() => handleUpdateClick(row.company)}
-                  className="bg-blue-500 text-white px-2 py-1 rounded text-xs"
-                >
-                  View
-                </button>
-              </td>
+          {loading ? (
+            <tr>
+              <td colSpan={6} className="text-center py-6">Loading...</td>
             </tr>
-          ))}
+          ) : data.length === 0 ? (
+            <tr>
+              <td colSpan={6} className="text-center py-6">No payout data found.</td>
+            </tr>
+          ) : (
+            data.map((row, idx) => (
+              <tr key={idx} className="border-t">
+                <td className="px-2 py-2">{row.company || row.companyName}</td>
+                <td className="px-2 py-2">{row.invoice}</td>
+                <td className="px-2 py-2">{row.service}</td>
+                <td className="px-2 py-2">{row.total_amount || row.amount}</td>
+                <td className="px-2 py-2">{row.complete_date || row.date}</td>
+                <td className="px-2 py-2">
+                  <button
+                    onClick={() => handleUpdateClick(row.company || row.companyName)}
+                    className="bg-blue-500 text-white px-2 py-1 rounded text-xs"
+                  >
+                    View
+                  </button>
+                </td>
+              </tr>
+            ))
+          )}
         </tbody>
       </table>
     </div>
